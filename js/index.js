@@ -22,18 +22,18 @@ $("document").ready(function() {
         stopProgress: false
     };
     
-    /*
-     *  Functions: setPomodoro, editValue,
-     *
-     *
-     */
+    /**
+      *  Functions: playSound and functions related  to setting pomodoro and pause interval
+      *
+      *
+      **/
      function playSound() {
         var wav = "http://oringz.com/oringz-uploads/sounds-727-good-morning.mp3";
          var audio = new Audio(wav);
         audio.play();
     }
 
-    // return duration of pomodoro or pause
+    // get duration of pomodoro or pause
     function getTimerMinutes() {
         if(timer.hasClass("pomodoro")) {   
             return parseInt(pomodoroValue.text());
@@ -61,7 +61,11 @@ $("document").ready(function() {
         timer.text(displayPause);        
     }
     
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+      * Functions related with rendering animation
+      *
+      *
+      **/
     
     // render progress animation
     function renderProgress(progressStep) {
@@ -69,7 +73,6 @@ $("document").ready(function() {
         
         circleSize = getTimerMinutes() * 60;
         
-        console.log("render circleSize: " + circleSize);
         
         if(progressStep<circleSize/4){
             var angle = -90 + (progressStep/circleSize)*360;
@@ -115,8 +118,14 @@ $("document").ready(function() {
             } 
     }
     
-    
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    /**
+      * Functions related with counter
+      *
+      *
+      **/
+     
     function countdown() { 
         function setValues() {
             var time = timer.text().split(":");
@@ -152,6 +161,7 @@ $("document").ready(function() {
             }
         }
         
+        // executed every second
         function tick() {
              setValues();
 
@@ -210,14 +220,19 @@ $("document").ready(function() {
     }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+      * Functionality: handling clik on buttons for setting starting values of pomodoro and pause
+      * handling click on start, pause and reset button
+      *
+      *
+      **/
     setPomodoro();
 
     // handle click on pluses and minusies
     $("#plusPomodoro").click(function() {
         var type = $("#pomodoro").text();
         var current = parseInt(pomodoroValue.text());
-        //console.log(current);
         var edited = current + 1;
         editValue(edited, type);
     });
@@ -242,8 +257,9 @@ $("document").ready(function() {
         var edited = current - 1;
         editValue(edited, type);
     });
-////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
     $("#start").click(function() {
         countdown();
         allPlusMinusButtons.attr('disabled', true);
